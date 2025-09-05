@@ -1,3 +1,4 @@
+<img width="270" height="600" alt="Screenshot_20250905-154303" src="https://github.com/user-attachments/assets/c01479fb-b088-4f59-88d3-ac59c7002fb1" />
 # AOD-tile
 Quickly turn AOD on or off with a simple tile.
 
