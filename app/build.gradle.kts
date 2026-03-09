@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.fedeveloper95.aodtile"
-    compileSdk = 34 // o la versione più recente
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.fedeveloper95.aodtile"
         minSdk = 29
-        targetSdk = 34 // o la versione più recente
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 36
+        versionCode = 2
+        versionName = "2.0"
     }
 
     buildTypes {
@@ -34,6 +34,5 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("androidx.core:core-ktx:1.15.0")
 }

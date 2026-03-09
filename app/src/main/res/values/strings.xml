@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AOD Tile</string>
+    <string name="tile_label">AOD</string>
+    <string name="aod_enabled">AOD enabled</string>
+    <string name="aod_disabled">AOD disabled</string>
+    <string name="permission_required">WRITE_SECURE_SETTINGS permission not granted. Grant it via ADB.</string>
 </resources>

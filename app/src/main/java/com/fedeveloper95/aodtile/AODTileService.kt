@@ -7,51 +7,35 @@ import android.widget.Toast
 
 class AODTileService : TileService() {
 
-    private val SETTING_KEY = "doze_always_on"
+    private val settingKey = "doze_always_on"
 
-    // Questo metodo viene chiamato quando il tile diventa visibile.
     override fun onStartListening() {
         super.onStartListening()
-        // Aggiorna lo stato del tile in base al valore attuale dell'AOD.
         updateTileState()
     }
 
-    // Questo metodo viene chiamato quando il tile viene cliccato.
     override fun onClick() {
         super.onClick()
         toggleAOD()
         updateTileState()
     }
 
-    // Questo metodo gestisce la logica di attivazione/disattivazione.
     private fun toggleAOD() {
         try {
-            // Legge lo stato attuale del valore 'doze_always_on'.
-            val currentAodState = Settings.Secure.getInt(contentResolver, SETTING_KEY, 0)
-            // Imposta il nuovo stato: 1 per attivo, 0 per disattivo.
+            val currentAodState = Settings.Secure.getInt(contentResolver, settingKey, 0)
             val newAodState = if (currentAodState == 1) 0 else 1
-            Settings.Secure.putInt(contentResolver, SETTING_KEY, newAodState)
-
-            // Mostra un messaggio di conferma.
-            val message = if (newAodState == 1) "AOD attivato" else "AOD disattivato"
+            Settings.Secure.putInt(contentResolver, settingKey, newAodState)
+            val message = if (newAodState == 1) getString(R.string.aod_enabled) else getString(R.string.aod_disabled)
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
         } catch (e: SecurityException) {
-            // Viene lanciata se non si ha il permesso WRITE_SECURE_SETTINGS.
-            Toast.makeText(this, "Permesso WRITE_SECURE_SETTINGS non concesso. Concedilo tramite ADB.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.permission_required), Toast.LENGTH_LONG).show()
         }
     }
 
-    // Questo metodo aggiorna l'aspetto del tile (stato attivo/inattivo).
     private fun updateTileState() {
-        val tile = qsTile
-        if (tile != null) {
-            // Legge lo stato attuale.
-            val aodState = Settings.Secure.getInt(contentResolver, SETTING_KEY, 0)
-            // Imposta lo stato del tile.
-            tile.state = if (aodState == 1) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            // Aggiorna il tile.
-            tile.updateTile()
-        }
+        val tile = qsTile ?: return
+        val aodState = Settings.Secure.getInt(contentResolver, settingKey, 0)
+        tile.state = if (aodState == 1) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        tile.updateTile()
     }
 }
